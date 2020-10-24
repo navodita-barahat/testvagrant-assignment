@@ -40,8 +40,8 @@ public class DriverInit {
 		}		
 		driver.manage().timeouts().implicitlyWait(100,TimeUnit.SECONDS);
 	    driver.manage().window().maximize();
-        String title = driver.getTitle();
-        System.out.println(title);		
+	    //open url passed in config file
+        driver.get(ReadConfig.config("url"));		
    	}
 	
 	//JAVA Generics to Create and return a New Page

@@ -30,7 +30,7 @@ public class Commons extends Library{
 	Util util = new Util();
 	
 	//select an option from home page like Offers, Pooled Campaign, Reverse Query
-		public void homeNavigationItems(int rowIndex) throws IOException {
+		public void homeNavigationOption(int rowIndex) throws IOException {
 			String menuItems = (String) util.getCellData("HomeNavigationOptions", "testData.xlsx", "MenuItems", rowIndex); 
 			for(WebElement item:navigationItems) {
 				if(item.getText().contains(menuItems)) {
