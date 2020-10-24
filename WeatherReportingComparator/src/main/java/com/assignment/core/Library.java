@@ -42,10 +42,10 @@ public class Library extends DriverInit {
 		actions.moveToElement(element).perform();
 	}
 	
-	//convert temperature from kelvin to celsius
-	public double kelvinToCelsiusCoverter() throws NumberFormatException, Exception {
+	//This method converts temperature received from API in kelvin to degree celsius
+	public double kelvinToCelsiusCoverter(int rowIndex) throws NumberFormatException, Exception {
 		//°C + 273.15 = 306.15K
-		double kelvin = Double.parseDouble(request.postRequest(0));
+		double kelvin = Double.parseDouble(request.postRequest(rowIndex));
 		double celsius = kelvin - 273.15;
 		System.out.println(celsius);
 		return celsius;

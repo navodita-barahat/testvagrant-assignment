@@ -41,6 +41,7 @@ public class WeatherPage extends Library {
 	Commons common = new Commons(driver);
 	Util util = new Util();
 	
+	//This method will search for a city obtained from testDataFile and check if city is displayed
 	public void searchForCity(int rowIndex) throws IOException {
 		Log.info("Get the name of city to search from testData file");
 		String cityToSearch = (String) util.getCellData("cityName", "testData.xlsx", "Weatherpage", rowIndex); 
@@ -57,7 +58,8 @@ public class WeatherPage extends Library {
 			// TODO Auto-generated catch block
 		}
 	}
-		
+	
+	//This methos will verify whether the city searched for is displayed on map
 	public boolean checkIfSearchedCityIsDisplayedOnMap(int rowIndex) throws IOException {
 		Log.info("Get the name of city to check on map from testData file");
 		String searched_city = (String) util.getCellData("cityName", "testData.xlsx", "Weatherpage", rowIndex); 
@@ -66,13 +68,16 @@ public class WeatherPage extends Library {
 			Log.info("Get the name of city from map");
 			String cityText = city.getText();
 			if(cityText.equalsIgnoreCase(searched_city)) {
+				if(city.isDisplayed()) {
 				result = true;
-			break;
+				break;
+				}
 			}
 		}
 		return result;
 	}
 
+	//This method will check if the weather infomation pop up is displayed when clicked on the city
 	public boolean checkIfWeatherInfoIsDisplayed(int rowIndex) throws IOException {
 		Log.info("Get the name of city to check weather information from testData file");
 		String searched_city = (String) util.getCellData("cityName", "testData.xlsx", "Weatherpage", rowIndex); 
@@ -99,13 +104,14 @@ public class WeatherPage extends Library {
 		return result;
 	}
 	
-	public int getTemperatureInDegreeFromWeatherInfo(int rowIndex) throws IOException {
+	//This method will extract the temperature in degree from UI
+	public Double getTemperatureInDegreeFromWeatherInfo(int rowIndex) throws IOException {
 		Log.info("Get the temperature in degrees from weather information");
 		String searched_city = (String) util.getCellData("cityName", "testData.xlsx", "Weatherpage", rowIndex); 
 		Actions action = new Actions(driver);
 		boolean result = false;
 		int count = 1;
-		Integer temperatureInDegree = null;
+		Double temperatureInDegree = null;
 		for(WebElement city:cityOnMap) {
 			String cityText = city.getText();
 			if(cityText.equalsIgnoreCase(searched_city)) {
@@ -114,7 +120,7 @@ public class WeatherPage extends Library {
 						if(child.getText().contains("Temp in Degrees:")) {
 							WebElement temperatureText = driver.findElement(By.xpath("(//*[@class='leaflet-pane leaflet-popup-pane']//parent::*//b)["+count+"]"));
 							String text = temperatureText.getText();
-							temperatureInDegree = Integer.valueOf(text.substring(17));//returns temperature in degrees
+							temperatureInDegree = Double.valueOf(text.substring(17));//returns temperature in degrees
 							System.out.println(temperatureInDegree);
 							result=true;
 						break;
@@ -128,10 +134,11 @@ public class WeatherPage extends Library {
 		return temperatureInDegree;
 	}
 	
-	public String comapareAPIAndApplicationTemperature() throws NumberFormatException, Exception {
-		Double allowed_deviation = Double.parseDouble(ReadConfig.config("max_allowed_deviation"));
-		Double temperatureFromApplication = (double) getTemperatureInDegreeFromWeatherInfo(0);
-		Double temperatureFromAPI = kelvinToCelsiusCoverter();
+	//This method compares temperature obtained via API and from Application UI and throws runtime error if difference > delta(maximum deviation allowed)
+	public String comapareAPIAndApplicationTemperature(int rowIndex) throws NumberFormatException, Exception {
+		Double allowed_deviation = Double.parseDouble(ReadConfig.config("delta"));
+		Double temperatureFromApplication = getTemperatureInDegreeFromWeatherInfo(rowIndex);
+		Double temperatureFromAPI = kelvinToCelsiusCoverter(rowIndex);
 		String status;
 		//check the difference between temperatureFromApplication and temperatureFromAPI 
 		//should not be greater than the allowed deviation mentioned in config.properties
