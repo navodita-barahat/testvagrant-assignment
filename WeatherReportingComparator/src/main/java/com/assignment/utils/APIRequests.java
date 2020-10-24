@@ -9,14 +9,19 @@ import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class APIRequests {
+import com.assignment.core.ReadConfig;
 
-	public String postRequest() {
-	    Matcher m = null;
+public class APIRequests {
+	
+	Util util = new Util();
+	
+	public String postRequest(int rowIndex) throws Exception {
+		String searched_city = (String) util.getCellData("cityName", "testData.xlsx", "Weatherpage", rowIndex); 
+		String app_id = ReadConfig.config("appid");
+		Matcher m = null;
 
 		   try {
-
-		    URL url = new URL("https://api.openweathermap.org/data/2.5/weather?q=Jaipur&appid=7fe67bf08c80ded756e598d6f8fedaea");
+		    URL url = new URL("https://api.openweathermap.org/data/2.5/weather?q="+searched_city+"&appid="+app_id);
 		    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 		    conn.setRequestMethod("POST");
 		   // conn.setRequestProperty("Accept", ""); // add your content mime type
@@ -25,7 +30,6 @@ public class APIRequests {
 		        throw new RuntimeException("Failed : HTTP error code : "
 		                + conn.getResponseCode());
 		    }
-		    
 
 		    BufferedReader br = new BufferedReader(new InputStreamReader(
 		    (conn.getInputStream())));
@@ -64,12 +68,12 @@ public class APIRequests {
 		    e.printStackTrace();
 
 		  } 
+		   //return value of temperature is in kelvin
 		   return m.group(1);
-		   	   
 	}
 	
-	public static void main(String args[]) {
+	public static void main(String args[]) throws Exception {
 		APIRequests request = new APIRequests();
-		System.out.println(request.postRequest());
+		System.out.println(request.postRequest(0));
 	}
 }

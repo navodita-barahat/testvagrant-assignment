@@ -3,6 +3,7 @@ package com.assignment.pages;
 import java.io.IOException;
 import java.util.List;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -29,8 +30,10 @@ public class WeatherPage extends Library {
     public List<WebElement> cityOnMap;
 	
 	@FindBy(xpath = "//*[@class='leaflet-pane leaflet-popup-pane']//following-sibling::*")
-    public List<WebElement> weatherInfo;
+    public List<WebElement> weatherInfoPopUp;
 	
+	@FindBy(xpath = "//*[@class='leaflet-pane leaflet-popup-pane']//parent::*//b")
+    public List<WebElement> weatherInfo;
 	
 	
 	Commons common = new Commons(driver);
@@ -80,9 +83,9 @@ public class WeatherPage extends Library {
 			String cityText = city.getText();
 			if(cityText.equalsIgnoreCase(searched_city)) {
 				action.moveToElement(city).click().build().perform();
-				int childSize = weatherInfo.size();
+				int childSize = weatherInfoPopUp.size();
 				if(childSize > 1) {
-					for(WebElement child:weatherInfo) {
+					for(WebElement child:weatherInfoPopUp) {
 						if(child.getText().contains("Temp in Fahrenheit:")) {
 							System.out.println("Weather Information is displayed");
 							result=true;
@@ -96,5 +99,35 @@ public class WeatherPage extends Library {
 		}
 		return result;
 	}
+	
+	public int getTemperatureInDegreeFromWeatherInfo(int rowIndex) throws IOException {
+		String searched_city = (String) util.getCellData("cityName", "testData.xlsx", "Weatherpage", rowIndex); 
+		Actions action = new Actions(driver);
+		boolean result = false;
+		int count = 1;
+		int temperatureInDegree = 0;
+		for(WebElement city:cityOnMap) {
+			String cityText = city.getText();
+			if(cityText.equalsIgnoreCase(searched_city)) {
+				action.moveToElement(city).click().build().perform();
+					for(WebElement child:weatherInfo) {
+						if(child.getText().contains("Temp in Degrees:")) {
+							WebElement temperatureText = driver.findElement(By.xpath("(//*[@class='leaflet-pane leaflet-popup-pane']//parent::*//b)["+count+"]"));
+							String text = temperatureText.getText();
+							temperatureInDegree = Integer.valueOf(text.substring(17));//returns temperature in degrees
+							System.out.println("");
+							result=true;
+						break;
+						}
+						count+=1;
+					}
+			}
+			if(result)
+				break;
+		}
+		return temperatureInDegree;
+	}
+	
+	
 	
 }
