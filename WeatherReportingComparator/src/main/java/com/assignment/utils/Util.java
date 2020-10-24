@@ -33,7 +33,7 @@ public class Util {
 	//get all values in a column
 	public List<Object> getColumnData(String colName, String filename, String sheetName) throws IOException{
     	//System.out.println("Testing123");
-    	fis = new FileInputStream("resources\\" + filename);
+    	fis = new FileInputStream("resources/" + filename);
         workbook = new XSSFWorkbook(fis);
         List<Object> data = new ArrayList<Object>();
         //int col_Num = 0;
