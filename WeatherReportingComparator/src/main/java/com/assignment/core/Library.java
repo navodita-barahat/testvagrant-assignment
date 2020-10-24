@@ -16,14 +16,8 @@ public class Library extends DriverInit {
 		// TODO Auto-generated constructor stub
 	}
 	
-	APIRequests request = new APIRequests();
+	APIRequests request = new APIRequests(driver);
 
-	//open a url
-	public void openUrl(String url) throws Exception {
-		driver.get(url);		
-		Reporter.log("Open Url"+ url, true);
-	}
-	
 	//explicit wait
 	public WebDriverWait waitMethod() {
 		WebDriverWait wait = new WebDriverWait(driver, 120);
