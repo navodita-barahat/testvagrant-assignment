@@ -84,8 +84,8 @@ public class WeatherPage extends Library {
 				if(childSize > 1) {
 					for(WebElement child:weatherInfo) {
 						if(child.getText().contains("Temp in Fahrenheit:")) {
-							result=true;
 							System.out.println("Weather Information is displayed");
+							result=true;
 						break;
 						}
 					}
