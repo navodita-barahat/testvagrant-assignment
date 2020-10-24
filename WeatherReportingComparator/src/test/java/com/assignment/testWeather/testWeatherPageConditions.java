@@ -7,6 +7,7 @@ import org.testng.Assert;
 import com.assignment.base.BaseTest;
 import com.assignment.core.Commons;
 import com.assignment.core.Library;
+import com.assignment.core.ReadConfig;
 import com.assignment.pages.WeatherPage;
 import com.assignment.utils.APIRequests;
 
@@ -32,18 +33,22 @@ public class testWeatherPageConditions extends BaseTest {
 		weather.GetInstance(WeatherPage.class).checkIfWeatherInfoIsDisplayed(0);
 	}
 	
-	//Phase 2 test
-	public void getTemperatureOfCityViaAPI() throws Exception {
-		//get the tempearture from weather API
-		String temperature = request.GetInstance(APIRequests.class).postRequest(0);
-		System.out.println(temperature);
+	//Phase 2 and Phase 3 test
+	public void getTemperatureOfCityViaAPIAndCompareWithUI() throws Exception {
+		//get the temperature from weather API
+		Double temperature_API = lib.GetInstance(Library.class).kelvinToCelsiusCoverter(0);
+		Double temperature_UI =  weather.GetInstance(WeatherPage.class).getTemperatureInDegreeFromWeatherInfo(0);
+		Assert.assertEquals(temperature_UI, temperature_API, ReadConfig.config("delta"));
 	}
 	
 	//Phase 3 test
 	public void compareTemperatureFromAPIAndApplicatio() throws IOException, Exception {
-		//check if temperature returned by API matches the Temperature displayed in application 
-		//any difference in temperature should fall with max allowed deviated
-		String status = weather.GetInstance(WeatherPage.class).comapareAPIAndApplicationTemperature();
+		/*
+		 * check if temperature returned by API matches the Temperature displayed in
+		 * application any difference in temperature should fall with max allowed
+		 * deviated
+		 */
+		String status = weather.GetInstance(WeatherPage.class).comapareAPIAndApplicationTemperature(0);
 		//add assertion to check if temperature matches or is within max deviation specified
 		Assert.assertEquals("success",status);
 	}

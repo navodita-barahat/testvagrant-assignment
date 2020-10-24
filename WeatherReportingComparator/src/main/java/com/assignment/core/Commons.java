@@ -30,26 +30,30 @@ public class Commons extends Library{
 	Util util = new Util();
 	
 	//select an option from home page like Offers, Pooled Campaign, Reverse Query
-		public void homeNavigationOption(int rowIndex) throws IOException {
-			String menuItems = (String) util.getCellData("HomeNavigationOptions", "testData.xlsx", "MenuItems", rowIndex); 
-			for(WebElement item:navigationItems) {
-				if(item.getText().contains(menuItems)) {
-					item.click();
-					break;
+	public void homeNavigationOption(int rowIndex) throws IOException {
+		String menuItems = (String) util.getCellData("HomeNavigationOptions", "testData.xlsx", "MenuItems", rowIndex); 
+		for(WebElement item:navigationItems) {
+			if(item.getText().contains(menuItems)) {
+				if(item.isEnabled()) {
+				item.click();
+				break;
 				}
 			}
 		}
+	}
 		
 	//Select a hamburger option 
-		public void selectHamburgerOption(int rowIndex) throws IOException {
-			sections.click();
-			String menuItems = (String) util.getCellData("hamburgerItem", "testData.xlsx", "HamburgerItems", rowIndex); 
-			for(WebElement item:hamburgerMenuItems) {
-				if(item.getText().contains(menuItems)) {
-					item.click();
-					break;
+	public void selectHamburgerOption(int rowIndex) throws IOException {
+		sections.click();
+		String menuItems = (String) util.getCellData("hamburgerItem", "testData.xlsx", "HamburgerItems", rowIndex); 
+		for(WebElement item:hamburgerMenuItems) {
+			if(item.getText().contains(menuItems)) {
+				if(item.isEnabled()) {
+				item.click();
+				break;
 				}
 			}
 		}
+	}
 
 }
