@@ -1,5 +1,7 @@
 package com.assignment.core;
 
+import java.util.logging.Logger;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -17,11 +19,13 @@ public class Library extends DriverInit {
 	}
 	
 	APIRequests request = new APIRequests(driver);
+	
+	 protected Logger logger = Logger.getLogger(Library.class.getName());
 
 	//explicit wait
 	public WebDriverWait waitMethod() {
 		WebDriverWait wait = new WebDriverWait(driver, 120);
-		return wait;
+		return wait;		
 	}
 	
 	//get page title

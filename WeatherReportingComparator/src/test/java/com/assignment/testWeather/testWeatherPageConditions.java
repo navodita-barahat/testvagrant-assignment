@@ -3,6 +3,7 @@ package com.assignment.testWeather;
 import java.io.IOException;
 
 import org.testng.Assert;
+import org.testng.annotations.Test;
 
 import com.assignment.base.BaseTest;
 import com.assignment.core.Commons;
@@ -20,6 +21,7 @@ public class testWeatherPageConditions extends BaseTest {
 	Library lib = new Library(driver);
 	
 	//Phase 1 test
+	@Test
 	public void testForWeatherPage() throws IOException, Exception {
 		//go to menu option India
 		common.GetInstance(Commons.class).homeNavigationOption(0);
@@ -34,6 +36,7 @@ public class testWeatherPageConditions extends BaseTest {
 	}
 	
 	//Phase 2 and Phase 3 test
+	@Test
 	public void getTemperatureOfCityViaAPIAndCompareWithUI() throws Exception {
 		//get the temperature from weather API
 		Double temperature_API = lib.GetInstance(Library.class).kelvinToCelsiusCoverter(0);
@@ -42,6 +45,7 @@ public class testWeatherPageConditions extends BaseTest {
 	}
 	
 	//Phase 3 test
+	@Test
 	public void compareTemperatureFromAPIAndApplicatio() throws IOException, Exception {
 		/*
 		 * check if temperature returned by API matches the Temperature displayed in

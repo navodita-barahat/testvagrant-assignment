@@ -1,0 +1,8 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name = "Regression">
+   <test name = "Regression_Tests" parallel = "methods" thread-count = "2">
+      <classes>
+         <class name = "testWeatherPageConditions" />
+      </classes>
+   </test>
+</suite>

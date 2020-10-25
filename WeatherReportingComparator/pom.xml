@@ -36,27 +36,15 @@
           <version>2.22.1</version>
 	         <configuration>
 				<suitexmlFiles>
-					<suitXmlFile>testng.xml</suitXmlFile>
-       				<suitXmlFile>testng2.xml</suitXmlFile>
+					<suitXmlFile>${TestNgFilename}</suitXmlFile>
 				</suitexmlFiles>
 				<!-- <properties>
 		            <property>
-		              <name>testnames</name>
-		              <value>partner-tests</value>
+		              <name>Regression_Tests</name>
+		              <value>tests</value>
 		            </property>
 	          </properties> -->
 			 </configuration>
-			  <!-- <configuration>
-		          <includes>
-		          	<include></include>
-		          </includes>
-		          <excludes>
-		          	<exclude>TestPartnerOnboarding.java</exclude>
-		          </excludes>
-		          <suiteXmlFiles>
-		         	 <suitXmlFile>${TestNgFilename}</suitXmlFile>
-		          </suiteXmlFiles>
-	          </configuration> -->
         </plugin>
         <plugin>
           <artifactId>maven-jar-plugin</artifactId>
@@ -185,38 +173,6 @@
         <artifactId>slf4j-api</artifactId>
         <version>1.7.25</version>
     </dependency>
-    
-    <dependency>
-		<groupId>javax.mail</groupId>
-		<artifactId>javax.mail-api</artifactId>
-		<version>1.6.2</version>
-	</dependency>
-	
-	<dependency>
-		<groupId>com.sun.mail</groupId>
-		<artifactId>smtp</artifactId>
-		<version>1.6.2</version>
-	</dependency>
-	
-	<dependency>
-	  <groupId>jakarta.activation</groupId>
-	  <artifactId>jakarta.activation-api</artifactId>
-	  <version>1.2.2</version>
-	</dependency>
-	
-	<dependency>
-	    <groupId>com.sun.mail</groupId>
-	    <artifactId>javax.mail</artifactId>
-	    <version>1.6.2</version>
-	</dependency>
-	
-	<!-- https://mvnrepository.com/artifact/com.automation-remarks/video-recorder -->
-	<dependency>
-	    <groupId>com.automation-remarks</groupId>
-	    <artifactId>video-recorder</artifactId>
-	    <version>1.0</version>
-	</dependency>
-	
-    
+
   </dependencies>
 </project>

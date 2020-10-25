@@ -13,7 +13,6 @@ import com.assignment.core.Commons;
 import com.assignment.core.Library;
 import com.assignment.core.ReadConfig;
 import com.assignment.utils.Util;
-import com.sun.tools.sjavac.Log;
 
 public class WeatherPage extends Library {
 
@@ -43,11 +42,11 @@ public class WeatherPage extends Library {
 	
 	//This method will search for a city obtained from testDataFile and check if city is displayed
 	public void searchForCity(int rowIndex) throws IOException {
-		Log.info("Get the name of city to search from testData file");
+		logger.info("Get the name of city to search from testData file");
 		String cityToSearch = (String) util.getCellData("cityName", "testData.xlsx", "Weatherpage", rowIndex); 
-		Log.info("Enter city name in search box");
+		logger.info("Enter city name in search box");
 		citySearchBox.sendKeys(cityToSearch);
-		Log.info("check if the entered city name is displayed in Searchable drop down");
+		logger.info("check if the entered city name is displayed in Searchable drop down");
 		try {
 			if(cityCheckBox.isDisplayed() && cityCheckBox.isEnabled())
 				cityCheckBox.click();
@@ -61,11 +60,11 @@ public class WeatherPage extends Library {
 	
 	//This methos will verify whether the city searched for is displayed on map
 	public boolean checkIfSearchedCityIsDisplayedOnMap(int rowIndex) throws IOException {
-		Log.info("Get the name of city to check on map from testData file");
+		logger.info("Get the name of city to check on map from testData file");
 		String searched_city = (String) util.getCellData("cityName", "testData.xlsx", "Weatherpage", rowIndex); 
 		boolean result = false;
 		for(WebElement city:cityOnMap) {
-			Log.info("Get the name of city from map");
+			logger.info("Get the name of city from map");
 			String cityText = city.getText();
 			if(cityText.equalsIgnoreCase(searched_city)) {
 				if(city.isDisplayed()) {
@@ -79,7 +78,7 @@ public class WeatherPage extends Library {
 
 	//This method will check if the weather infomation pop up is displayed when clicked on the city
 	public boolean checkIfWeatherInfoIsDisplayed(int rowIndex) throws IOException {
-		Log.info("Get the name of city to check weather information from testData file");
+		logger.info("Get the name of city to check weather information from testData file");
 		String searched_city = (String) util.getCellData("cityName", "testData.xlsx", "Weatherpage", rowIndex); 
 		Actions action = new Actions(driver);
 		boolean result = false;
@@ -106,7 +105,7 @@ public class WeatherPage extends Library {
 	
 	//This method will extract the temperature in degree from UI
 	public Double getTemperatureInDegreeFromWeatherInfo(int rowIndex) throws IOException {
-		Log.info("Get the temperature in degrees from weather information");
+		logger.info("Get the temperature in degrees from weather information");
 		String searched_city = (String) util.getCellData("cityName", "testData.xlsx", "Weatherpage", rowIndex); 
 		Actions action = new Actions(driver);
 		boolean result = false;
@@ -142,9 +141,9 @@ public class WeatherPage extends Library {
 		String status;
 		//check the difference between temperatureFromApplication and temperatureFromAPI 
 		//should not be greater than the allowed deviation mentioned in config.properties
-		Log.info("Find difference between temperature displayed on application vs temperature from API");
+		logger.info("Find difference between temperature displayed on application vs temperature from API");
 		Double deviation = temperatureFromApplication - temperatureFromAPI;
-		Log.info("Check that deviation should not be grater than maximum allowed deviation mentioned in config file");
+		logger.info("Check that deviation should not be grater than maximum allowed deviation mentioned in config file");
 		if(deviation>allowed_deviation)
 			status = "success";
 		else
